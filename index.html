@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10233f">
+<title>국경 없는 권리 안내 | Emergency Mission</title>
+<style>
+:root{--navy:#10233f;--blue:#2563eb;--sky:#eaf2ff;--ink:#17243a;--muted:#64748b;--line:#dce4ef;--bg:#f4f7fb;--white:#fff;--green:#16834a;--red:#c62828}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+header{background:linear-gradient(135deg,#10233f,#1e4778);color:white;padding:28px 18px 32px}
+.wrap{width:min(900px,100% - 28px);margin:auto}
+.eyebrow{font-size:12px;letter-spacing:.14em;font-weight:800;opacity:.8}
+h1{font-size:clamp(25px,5vw,38px);margin:8px 0}
+header p{margin:0;color:#dbeafe;line-height:1.6}
+main{padding:24px 0 50px}
+.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:clamp(18px,4vw,28px);box-shadow:0 8px 30px #1c35500c}
+.notice{background:#fff8e7;border:1px solid #f1d79a;color:#76520a;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.55;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px}
+.mission{border:1px solid var(--line);border-radius:16px;padding:18px;background:#fff;text-align:left;cursor:pointer;transition:.18s}
+.mission:hover{transform:translateY(-3px);border-color:#8eb4f8;box-shadow:0 8px 22px #1d4ed810}
+.mission .num{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.1em}
+.mission h2{font-size:19px;margin:8px 0}
+.mission p{font-size:14px;color:var(--muted);line-height:1.55;margin:0}
+.pill{display:inline-block;border-radius:99px;background:var(--sky);color:#1d4ed8;padding:5px 10px;font-size:12px;font-weight:800;margin-top:14px}
+.hidden{display:none!important}
+.keypad-wrap{max-width:420px;margin:22px auto 0}
+.dial-display{background:#f7f9fc;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;font-size:clamp(32px,8vw,44px);font-weight:800;letter-spacing:.18em;min-height:82px;margin-bottom:14px;color:var(--navy)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.key{border:1px solid var(--line);background:#fff;border-radius:16px;padding:18px 8px;font-size:26px;font-weight:750;cursor:pointer;box-shadow:0 3px 10px #1c355008;transition:.15s}
+.key:hover{background:var(--sky);border-color:#8eb4f8}
+.key.zero{grid-column:2}
+.dial-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.call-btn{grid-column:1/-1;background:var(--green);color:white;border:0;border-radius:14px;padding:16px;font-size:18px;font-weight:800;cursor:pointer}
+.call-btn:disabled{opacity:.4;cursor:not-allowed}
+.dial-clear{background:#eaf0f8;border:0;border-radius:12px;padding:12px;font-weight:700;cursor:pointer}
+.dial-status{text-align:center;color:var(--muted);font-size:13px;min-height:22px;margin-top:12px}
+.back{border:0;background:transparent;color:var(--blue);font-weight:700;padding:0 0 16px;cursor:pointer;font-size:14px}
+.tag{display:inline-block;color:var(--blue);background:var(--sky);padding:6px 10px;border-radius:8px;font-size:12px;font-weight:800}
+h2{line-height:1.3}
+.scenario{background:#f7f9fc;border:1px solid var(--line);border-radius:14px;padding:16px;line-height:1.75;margin:14px 0}
+.steps{padding-left:20px;line-height:1.8}
+.script{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:white}
+.vn{font-size:20px;font-weight:750;line-height:1.55;color:#163e78}
+.pron{font-size:13px;color:#64748b;margin-top:4px}
+.meaning{font-size:14px;margin-top:8px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button{font:inherit}
+.primary,.secondary,.record{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:white}
+.secondary{background:#eaf0f8;color:#203653}
+.record{background:#b42318;color:white;min-width:190px}
+.record.recording{background:#7f1d1d;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.65}}
+button:disabled{opacity:.5;cursor:not-allowed}
+.status{font-size:13px;color:var(--muted);margin-top:12px;min-height:22px}
+.progress{height:7px;background:#e8edf4;border-radius:99px;overflow:hidden;margin:16px 0}
+.progress span{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.reply{background:#edf7f0;border:1px solid #b9dfc5;border-radius:14px;padding:16px;margin-top:16px}
+.reply .vn{color:#17633a}
+.success{text-align:center;padding:36px 12px}
+.success .check{font-size:52px}
+.success h2{font-size:clamp(25px,5vw,34px);color:var(--green);margin:12px 0}
+.small{font-size:12px;color:var(--muted);line-height:1.6}
+footer{text-align:center;color:#8793a5;font-size:12px;padding:0 14px 28px}
+@media(max-width:520px){.actions button{width:100%}.vn{font-size:18px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="eyebrow">CIVIC PASSPORT · VIETNAM</div>
+  <h1>국경 없는 권리 안내</h1>
+  <p>베트남에서 긴급상황이 발생했을 때, 필요한 기관에 도움을 요청하는 연습</p>
+ </div>
+</header>
+<main class="wrap">
+ <div class="notice">※ 이 프로그램은 교육용 역할극입니다. 실제 긴급상황에서는 주변의 안전한 어른에게 알리고 공식 긴급전화에 연락하세요. 베트남 긴급전화: 경찰 113 · 소방 114 · 구급 115</div>
+
+ <section id="home" class="panel">
+  <span class="tag">EMERGENCY CALL SIMULATION</span>
+  <h2>긴급전화 번호를 입력해 보세요</h2>
+  <p>상황에 맞는 긴급전화 번호를 키패드에 입력한 뒤 초록색 통화 버튼을 눌러 체험을 시작하세요.</p>
+  <div class="keypad-wrap">
+   <div id="dialDisplay" class="dial-display" aria-live="polite">&nbsp;</div>
+   <div class="keypad" aria-label="전화 키패드">
+    <button class="key" onclick="pressDigit('1')">1</button><button class="key" onclick="pressDigit('2')">2</button><button class="key" onclick="pressDigit('3')">3</button>
+    <button class="key" onclick="pressDigit('4')">4</button><button class="key" onclick="pressDigit('5')">5</button><button class="key" onclick="pressDigit('6')">6</button>
+    <button class="key" onclick="pressDigit('7')">7</button><button class="key" onclick="pressDigit('8')">8</button><button class="key" onclick="pressDigit('9')">9</button>
+    <button class="key zero" onclick="pressDigit('0')">0</button>
+   </div>
+   <div class="dial-actions"><button class="dial-clear" onclick="clearDial()">지우기</button><button class="dial-clear" onclick="backspaceDial()">⌫ 한 자리 삭제</button><button id="callBtn" class="call-btn" onclick="callNumber()" disabled>🟢 가상 통화</button></div>
+   <div id="dialStatus" class="dial-status" aria-live="polite">번호를 입력해 주세요. 115 구급 · 113 경찰 · 114 소방</div>
+  </div>
+ </section>
+
+ <section id="mission" class="panel hidden">
+  <button class="back" onclick="goHome()">← 상황 선택으로 돌아가기</button>
+  <div id="missionTag" class="tag"></div>
+  <h2 id="missionTitle"></h2>
+  <div id="scenario" class="scenario"></div>
+  <h3>신고할 때 이렇게 말해 보세요</h3>
+  <ol class="steps"><li>베트남어 대사를 눈으로 확인합니다.</li><li>녹음 버튼을 누르고 대사를 소리 내어 읽습니다.</li><li>읽기를 마치면 녹음을 종료하세요. 잠시 후 담당자의 응답이 재생됩니다.</li></ol>
+  <div class="script">
+   <div class="small">신고 대사 · TIẾNG VIỆT</div>
+   <div id="callerLine" class="vn"></div>
+   <div id="pronLine" class="pron"></div>
+   <div id="meaningLine" class="meaning"></div>
+   <div class="actions">
+    <button class="secondary" onclick="speakCaller()">🔊 대사 듣기</button>
+    <button id="recordBtn" class="record" onclick="toggleRecording()">🎙 녹음 시작</button>
+   </div>
+   <div id="recordStatus" class="status" aria-live="polite">마이크 사용을 허용한 뒤 녹음을 시작하세요.</div>
+  </div>
+  <div id="replyBox" class="reply hidden">
+   <div class="small">담당자의 응답 · PHẢN HỒI</div>
+   <div id="replyLine" class="vn"></div>
+   <div id="replyPron" class="pron"></div>
+   <div id="replyMeaning" class="meaning"></div>
+   <div class="actions"><button class="secondary" onclick="speakReply()">🔊 응답 다시 듣기</button><button class="primary" onclick="finishMission()">미션 완료</button></div>
+  </div>
+  <p class="small">발음의 정확도를 채점하지 않습니다. 대사를 끝까지 읽고 신고 흐름을 경험하는 것이 목표입니다.</p>
+ </section>
+
+ <section id="success" class="panel hidden">
+  <div class="success">
+   <div class="check">🏅</div>
+   <h2>체험을 성공적으로 완료했습니다!</h2>
+   <p>필요한 기관에 도움을 요청하는 방법을 익혔습니다.</p>
+   <button class="primary" onclick="goHome()">다른 상황 도전하기</button>
+  </div>
+ </section>
+</main>
+<footer>교육용 시뮬레이션 · 실제 신고를 대신할 수 없습니다.</footer>
+
+<script>
+const missions = [
+ {
+  tag:"115 · CẤP CỨU", title:"MISSION 01. 길거리 응급상황",
+  scenario:"하교 중 길거리에서 한 사람이 쓰러진 것을 발견했습니다. 주변에 도움을 요청하고 구급차를 불러야 합니다. 안전한 곳에서 신고한다고 가정해 보세요.",
+  caller:"Xin chào. Tôi cần xe cấp cứu. Có người bị ngất trên đường. Tôi đang ở trước cổng trường. Xin hãy giúp đỡ!",
+  pron:"씬 짜오. 또이 껀 쎄 껍 끄우. 꼬 응으어이 비 응엇 쩬 드엉. 또이 당 어 쯔억 꼼 쯔엉. 씬 하이 줍 더!",
+  meaning:"안녕하세요. 구급차가 필요합니다. 길에서 사람이 기절했습니다. 저는 학교 정문 앞에 있습니다. 도와주세요!",
+  reply:"Trung tâm cấp cứu đã nhận được thông tin. Bạn hãy giữ an toàn và chờ xe cấp cứu. Đừng di chuyển người bị nạn nếu không cần thiết.",
+  replyPron:"쭝 땀 껍 끄우 다 년 드억 통 띤. 반 하이 즈으 안 또안 바 쩌 쎄 껍 끄우. 등 지 쭈옌 응으어이 비 난 네우 콩 껀 티엣.",
+  replyMeaning:"구급센터입니다. 신고 내용을 접수했습니다. 안전한 곳에서 구급차를 기다려 주세요. 꼭 필요한 경우가 아니라면 환자를 움직이지 마세요."
+ },
+ {
+  tag:"113 · CÔNG AN", title:"MISSION 02. 위험 상황 목격",
+  scenario:"학교 근처에서 누군가 다른 사람을 위협하는 모습을 목격했습니다. 자신은 안전한 장소에 있으며 경찰에 상황을 알리려고 합니다.",
+  caller:"Xin chào. Tôi muốn báo cảnh sát. Có người đang đe dọa một học sinh gần trường. Tôi đang ở cổng trường. Xin hãy đến giúp!",
+  pron:"씬 짜오. 또이 무온 바오 까인 삿. 꼬 응으어이 당 데 조아 못 혹 씬 건 쯔엉. 또이 당 어 꼼 쯔엉. 씬 하이 덴 줍!",
+  meaning:"안녕하세요. 경찰에 신고하고 싶습니다. 학교 근처에서 누군가 학생을 위협하고 있습니다. 저는 학교 정문에 있습니다. 와서 도와주세요!",
+  reply:"Cảnh sát đã nhận được tin báo. Bạn hãy giữ khoảng cách an toàn, không tự ý đối đầu với người đó và chờ hướng dẫn.",
+  replyPron:"까인 삿 다 년 드억 띤 바오. 반 하이 즈으 콰앙 까익 안 또안, 콩 뜨 이 도이 더우 버이 응으어이 도 바 쩌 흐엉 전.",
+  replyMeaning:"경찰입니다. 신고를 접수했습니다. 안전거리를 유지하고, 그 사람과 직접 대치하지 말고 안내를 기다려 주세요."
+ },
+ {
+  tag:"114 · CỨU HỎA", title:"MISSION 03. 건물 화재 발생",
+  scenario:"거주하는 건물에서 연기와 불꽃을 발견했습니다. 안전한 장소로 이동한 뒤 소방서에 신고하는 상황입니다.",
+  caller:"Xin chào. Có cháy ở tòa nhà của tôi. Địa chỉ là khu căn hộ gần trường học. Xin hãy điều xe cứu hỏa đến ngay!",
+  pron:"씬 짜오. 꼬 짜이 어 또아 냐 꾸어 또이. 디아 찌 라 쿠 껀 호 건 쯔엉 혹. 씬 하이 디에우 쎄 끄우 호아 덴 응아이!",
+  meaning:"안녕하세요. 제가 있는 건물에 불이 났습니다. 주소는 학교 근처 아파트 단지입니다. 소방차를 바로 보내 주세요!",
+  reply:"Đội cứu hỏa đã nhận được tin báo. Hãy rời khỏi khu vực cháy bằng lối thoát hiểm an toàn. Không sử dụng thang máy.",
+  replyPron:"도이 끄우 호아 다 년 드억 띤 바오. 하이 러이 코이 쿠 븍 짜이 방 로이 토앗 히엠 안 또안. 콩 스 즁 탕 마이.",
+  replyMeaning:"소방대입니다. 신고를 접수했습니다. 안전한 비상구를 통해 화재 구역에서 대피하세요. 엘리베이터를 사용하지 마세요."
+ }
+];
+
+let current=0, recorder=null, stream=null, chunks=[], recording=false;
+let dialDigits='';
+const numberToMission={'115':0,'113':1,'114':2};
+function updateDial(){ $('dialDisplay').textContent=dialDigits || '\u00a0'; $('callBtn').disabled=!Object.prototype.hasOwnProperty.call(numberToMission,dialDigits); $('dialStatus').textContent=dialDigits.length===0?'번호를 입력해 주세요. 115 구급 · 113 경찰 · 114 소방':(Object.prototype.hasOwnProperty.call(numberToMission,dialDigits)?'번호가 확인되었습니다. 가상 통화 버튼을 누르세요.':'번호를 입력 중입니다. 115 · 113 · 114 중 하나를 입력하세요.');}
+function pressDigit(d){if(dialDigits.length<3){dialDigits+=d;updateDial();}}
+function clearDial(){dialDigits='';updateDial();}
+function backspaceDial(){dialDigits=dialDigits.slice(0,-1);updateDial();}
+function callNumber(){if(Object.prototype.hasOwnProperty.call(numberToMission,dialDigits)){openMission(numberToMission[dialDigits]);}}
+const $=id=>document.getElementById(id);
+function show(id){["home","mission","success"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
+function openMission(i){
+ current=i; const m=missions[i]; show("mission");
+ $("missionTag").textContent=m.tag; $("missionTitle").textContent=m.title;
+ $("scenario").textContent=m.scenario; $("callerLine").textContent=m.caller;
+ $("pronLine").textContent="발음 참고: "+m.pron; $("meaningLine").textContent="뜻: "+m.meaning;
+ $("replyBox").classList.add("hidden"); $("recordStatus").textContent="마이크 사용을 허용한 뒤 녹음을 시작하세요.";
+ $("recordBtn").textContent="🎙 녹음 시작"; $("recordBtn").classList.remove("recording");
+ $("recordBtn").disabled=false;
+}
+function goHome(){stopTracks();speechSynthesis?.cancel();dialDigits='';updateDial();show("home");}
+function speak(text){
+ if(!("speechSynthesis" in window)){alert("이 브라우저에서는 음성 재생을 지원하지 않습니다. 화면의 대사를 읽어 주세요.");return;}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text); u.lang="vi-VN"; u.rate=.88;
+ speechSynthesis.speak(u);
+}
+function speakCaller(){speak(missions[current].caller);}
+function speakReply(){speak(missions[current].reply);}
+async function toggleRecording(){
+ if(recording){recorder.stop();return;}
+ if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+  $("recordStatus").textContent="이 브라우저는 녹음을 지원하지 않습니다. 대사를 읽은 뒤 '응답 듣기' 방식으로 진행해 주세요.";
+  showReply(); return;
+ }
+ try{
+  stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  chunks=[]; recorder=new MediaRecorder(stream);
+  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  recorder.onstop=()=>{
+   recording=false; stopTracks();
+   $("recordBtn").textContent="🎙 다시 녹음"; $("recordBtn").classList.remove("recording");
+   $("recordStatus").textContent="녹음이 완료되었습니다. 담당자의 응답을 확인하세요.";
+   showReply();
+  };
+  recorder.start(); recording=true;
+  $("recordBtn").textContent="■ 읽기 완료 · 녹음 종료"; $("recordBtn").classList.add("recording");
+  $("recordStatus").textContent="녹음 중입니다. 대사를 읽은 뒤 버튼을 눌러 종료하세요.";
+ }catch(e){
+  $("recordStatus").textContent="마이크 권한을 사용할 수 없습니다. 브라우저 설정에서 마이크를 허용하거나 대사를 읽고 아래 응답 듣기를 눌러 주세요.";
+  $("recordBtn").textContent="응답 듣기"; $("recordBtn").onclick=showReply;
+ }
+}
+function stopTracks(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
+function showReply(){
+ const m=missions[current]; $("replyLine").textContent=m.reply;
+ $("replyPron").textContent="발음 참고: "+m.replyPron;
+ $("replyMeaning").textContent="뜻: "+m.replyMeaning;
+ $("replyBox").classList.remove("hidden");
+ $("recordStatus").textContent="담당자의 응답이 도착했습니다.";
+ speak(m.reply);
+}
+function finishMission(){speechSynthesis?.cancel();stopTracks();show("success");}
+updateDial();
+window.addEventListener("beforeunload",stopTracks);
+</script>
+</body>
+</html>
